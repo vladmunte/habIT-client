@@ -1,5 +1,18 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
 
+{{#paper-toolbar as |toolbar|}}
+  {{#toolbar.tools}}
+     <h2>Welcome to habIT</h2>
+     <span class="flex"></span>
+    {{#paper-button raised=false}}
+      Habit Tracker
+    {{/paper-button}}
+    {{#paper-button raised=false}}
+      Reminder
+    {{/paper-button}}
+    {{#paper-button raised=false}}
+      Notes
+    {{/paper-button}}
+    
+  {{/toolbar.tools}}
+ {{/paper-toolbar}}
 {{outlet}}
