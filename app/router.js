@@ -9,6 +9,8 @@ Router.map(function() {
   this.route('users');
   this.route('quotes');
   this.route('habit-tracker');
+  this.route('about');
+  this.route('contact');
 });
 
 export default Router;

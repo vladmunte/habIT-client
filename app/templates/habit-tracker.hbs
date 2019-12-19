@@ -1,5 +1,17 @@
-{{#paper-button raised=false onClick=(action "showDialogAction")}}
-  Create New
+
+<div class="layout-row">
+  <div class="flex-30"></div>
+  <div class="flex">
+    {{#each-in habits as |habit|}}
+      {{habit.title}}
+    {{/each-in}}
+  </div> 
+  <div class="flex-30"></div>
+</div>
+
+
+{{#paper-button class="add-button" fab=true raised=false onClick=(action "showDialogAction")}}
+  +
 {{/paper-button}}
 
 {{#if showDialog}}
@@ -15,15 +27,26 @@
     {{#paper-dialog-content}}
       {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center" onSubmit=(action "basicSubmitAction") as |form|}}
         <div class="layout-row">
+
           <div class="layout-column flex-50">
             {{form.input label="Title" value=title onChange=(action (mut title)) required=true}}
           </div>
+
           <div class="layout-column flex-50">
             {{paper-input label="Goal Days" type="number" value=goalDays min=1 max=356 onChange=(action (mut goalDays)) required=true}}
             {{paper-slider class="flex" min=1 max=356 value=goalDays onChange=(action (mut goalDays))}}
+            {{#paper-radio-group
+              groupValue=(readonly goalDays)
+              onChange=(action (mut goalDays)) as |group|}}
+              {{#group.radio value=7}} 1 Week {{/group.radio}}
+              {{#group.radio value=30}} 1 Month {{/group.radio}}
+              {{#group.radio value=356}} 1 Year {{/group.radio}}
+            {{/paper-radio-group}}
+
           </div>
+
         </div>
-        <div class="layout-row">
+        <div class="layout-row  ">
           {{paper-input textarea=true block=true label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
             value=description onChange=(action (mut description))}}
         </div>
@@ -35,4 +58,4 @@
 
   {{/paper-dialog}}
 {{/if}}
-{{outlet}}
+

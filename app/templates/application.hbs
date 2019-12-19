@@ -1,22 +1,20 @@
-
 {{#paper-toolbar as |toolbar|}}
   {{#toolbar.tools}}
     {{#link-to "index"}}
-     <h2>Welcome to habIT</h2>
+      <h2>Welcome to habIT</h2>
     {{/link-to}}
-     <span class="flex"></span>
-    {{#link-to "habit-tracker"}}
-      {{#paper-button raised=false}}
-        Habit Tracker
+    <span class="flex"></span>
+    {{#link-to "about"}}
+      {{#paper-button}}
+        <p>About</p>
       {{/paper-button}}
     {{/link-to}}
-      {{#paper-button raised=false}}
-        Reminder
+    {{#link-to "contact"}}
+      {{#paper-button}}
+        <p>Contact</p>
       {{/paper-button}}
-      {{#paper-button raised=false}}
-        Notes
-      {{/paper-button}}
-      
+    {{/link-to}}
   {{/toolbar.tools}}
- {{/paper-toolbar}}
+{{/paper-toolbar}}
+
 {{outlet}}
