@@ -2,17 +2,33 @@
 <div class="layout-row">
   <div class="flex-30"></div>
   <div class="flex">
-    {{#each-in habits as |habit|}}
-      {{habit.title}}
+  <ul>
+    {{#each-in habits as |habit habitProps|}}
+     <div onClick="">
+      {{#paper-card as |card|}}
+        {{#card.title as |title|}}
+          {{#title.text as |text|}}
+          {{#text.headline}}{{habitProps.title}}{{/text.headline}}
+          {{#text.subhead}}{{habitProps.description}}{{/text.subhead}}
+          {{/title.text}}
+          {{paper-progress-circular value=habitProps}}
+      {{/card.title}}
+      {{#card.actions}}
+      {{/card.actions}}
+    {{/paper-card}}
+        </div>
     {{/each-in}}
+  </ul>
   </div> 
   <div class="flex-30"></div>
 </div>
-
-
-{{#paper-button class="add-button" fab=true raised=false onClick=(action "showDialogAction")}}
+{{#each habits}}
+{{/each}}
+<div class="layout-row layout-align-space-around-end">
+  {{#paper-button class="add-button" fab=true raised=false onClick=(action "showDialogAction")}}
   +
 {{/paper-button}}
+</div>
 
 {{#if showDialog}}
   {{#paper-dialog class="flex-77" onClose=(action "closeDialogAction" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
