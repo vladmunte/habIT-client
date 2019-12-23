@@ -11,7 +11,7 @@ Router.map(function() {
   this.route('habit-tracker');
   this.route('about');
   this.route('contact');
-  this.route('habit');
+  this.route('habits');
 });
 
 export default Router;

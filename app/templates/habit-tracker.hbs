@@ -2,32 +2,28 @@
 <div class="layout-row">
   <div class="flex-30"></div>
   <div class="flex">
-  <ul>
-    {{#each-in habits as |habit habitProps|}}
-     <div onClick="">
-      {{#paper-card as |card|}}
-        {{#card.title as |title|}}
-          {{#title.text as |text|}}
-          {{#text.headline}}{{habitProps.title}}{{/text.headline}}
-          {{#text.subhead}}{{habitProps.description}}{{/text.subhead}}
-          {{/title.text}}
-          {{paper-progress-circular value=habitProps}}
-      {{/card.title}}
-      {{#card.actions}}
-      {{/card.actions}}
-    {{/paper-card}}
-        </div>
-    {{/each-in}}
-  </ul>
+    <ul>
+      {{#each habitsProps as |habit|}}
+        {{#paper-card as |card|}}
+          {{#card.title as |title|}}
+            {{#title.text as |text|}}
+              {{#text.headline}}{{habit.title}}{{/text.headline}}
+              {{#text.subhead}}{{habit.description}}{{/text.subhead}}
+            {{/title.text}}
+            {{paper-progress-circular value=habit.habitProgress}}
+          {{/card.title}}
+          {{#card.actions}}
+          {{/card.actions}}
+        {{/paper-card}}
+      {{/each}}
+    </ul>
   </div> 
   <div class="flex-30"></div>
 </div>
-{{#each habits}}
-{{/each}}
 <div class="layout-row layout-align-space-around-end">
   {{#paper-button class="add-button" fab=true raised=false onClick=(action "showDialogAction")}}
-  +
-{{/paper-button}}
+    +
+  {{/paper-button}}
 </div>
 
 {{#if showDialog}}

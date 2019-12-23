@@ -4,7 +4,10 @@ import { computed } from '@ember/object';
 export default Controller.extend({
     showDialog: false,
     habits: computed(function() {
-        this.get('store').findAll('habit');
+        return this.get('store').findAll('habit');
+    }),
+    habitsProps: computed(function() {
+        return this.get('habits');
     }),
     actions: {
         showDialogAction() {

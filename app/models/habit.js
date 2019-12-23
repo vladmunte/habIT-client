@@ -5,4 +5,5 @@ export default DS.Model.extend({
   description: DS.attr(),
   daysChecked: DS.attr(),
   daysGoal: DS.attr(),
+  habitProgress: DS.attr(),
 });
