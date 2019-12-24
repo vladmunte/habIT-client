@@ -63,7 +63,7 @@
             value=description onChange=(action (mut description))}}
         </div>
         <div class="layout-row">
-          {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
+          {{#paper-button raised=true primary=true onClick=(action "addHabit")}}Submit{{/paper-button}}
         </div>
       {{/paper-form}}
     {{/paper-dialog-content}}

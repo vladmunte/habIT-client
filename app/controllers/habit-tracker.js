@@ -9,6 +9,20 @@ export default Controller.extend({
     habitsProps: computed(function() {
         return this.get('habits');
     }),
+    createHabit: computed(function() {
+        var title = this.get('title');
+        var description = this.get('description');
+        var daysGoal = this.get('daysGoal');
+
+        var newHabit = this.store.createRecord('habit', {
+            title: title,
+            description: description,
+            daysGoal: daysGoal
+        });
+
+        return newHabit.save();
+
+    }),
     actions: {
         showDialogAction() {
             this.toggleProperty("showDialog")
@@ -16,42 +30,17 @@ export default Controller.extend({
         closeDialogAction() {
             this.toggleProperty("showDialog")
         },
-        basicSubmitAction() {
+        basicSubmitAction() {   
             
         },
+        addHabit() {
+            const habit = this.get('createHabit');
+            this.setProperties({
+                title: '',
+                description: '',
+                daysGoal: ''
+            });
+        },
     },
-    habitsV2: computed(function() {
-        return {
-            
-                habit1: {
-                    title: "Habit 1",
-                    daysGoal: 35,
-                    daysChecked: 12,
-                    description: "Dummy description for Habit1",
-                    procent: 100*12/35
-                },
-                habit2: {
-                    title: "Habit 2",
-                    daysGoal: 77,
-                    daysChecked: 71,
-                    description: "Dummy description for Habit2",
-                    procent: 100*71/77
-                },
-                habit3: {
-                    title: "Habit 3",
-                    daysGoal: 19,
-                    daysChecked: 4,
-                    description: "Dummy description for Habit3",
-                    procent: 100*4/19
-                },
-                habit4: {
-                    title: "Habit 4",
-                    daysGoal: 60,
-                    daysChecked: 24,
-                    description: "Dummy description for Habit4",
-                    procent: 100*24/60
-                }
-        }
-    }),
 
 });
