@@ -2,11 +2,13 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
-    showDialog: false,
+    showFormDialog: false,
+    showDeleteDialog: false,
+    confirmation: false,
     habits: computed(function() {
         return this.get('store').findAll('habit');
     }),
-    habitsProps: computed(function() {
+    habitsProps: computed('habits.length', function() {
         return this.get('habits');
     }),
     createHabit: computed(function() {
@@ -23,24 +25,44 @@ export default Controller.extend({
         return newHabit.save();
 
     }),
+
+    newHabit: computed(function() {
+      return this.store.createRecord('habit', {
+        title: '',
+        description: '',
+        daysGoal: ''
+      });
+    }),
+
     actions: {
-        showDialogAction() {
-            this.toggleProperty("showDialog")
+        showFormDialogAction() {
+          const newHabit = this.store.createRecord('habit', {
+            title: '',
+            description: '',
+            daysGoal: ''
+          });
+          this.set('newHabit', newHabit)
+          this.set("showFormDialog", true);
         },
-        closeDialogAction() {
-            this.toggleProperty("showDialog")
+        closeFormDialogAction() {
+          this.get('newHabit').deleteRecord();
+          this.set("showFormDialog", false);
         },
-        basicSubmitAction() {   
-            
+        closeDeleteDialogAction() {
+          this.set("showDeleteDialog", false);
+        },
+        showDeleteDialogAction(habit) {
+          this.set('currentHabit', habit);
+          this.set("showDeleteDialog", true);
         },
         addHabit() {
-            const habit = this.get('createHabit');
-            this.setProperties({
-                title: '',
-                description: '',
-                daysGoal: ''
-            });
+          this.get('newHabit').save();
+          this.set("showFormDialog", false);
         },
+        confirmDelete(habit) {
+          this.get('currentHabit').destroyRecord();
+          this.set('showDeleteDialog', false);
+        }
     },
 
 });

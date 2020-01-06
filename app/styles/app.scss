@@ -20,3 +20,45 @@ $warn: "pink";
   color: #FFF;
 }
 
+md-menu-content {
+  padding: 0;
+}
+
+.card-cont {
+  margin-top: 100px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border: solid 1px black;
+  border-radius: 5px;
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.no-habits-message {
+  color: rgb(175, 175, 175);
+  position: absolute;
+  top: 39%;
+  left: 42.5%;
+  font-size: 24px;
+}
+
+.add-one-message {
+  color: rgb(175, 175, 175);
+  position: absolute;
+  top: 60%;
+  left: 47.5%;
+  font-size: 24px;
+}
+.add-one-arrow {
+  color: rgb(175, 175, 175);
+  position: absolute;
+  top: 62%;
+  left: 49.4%;
+  font-size: 24px;
+}
+// .container-suprem {
+//   overflow: auto;
+//   width: 75%;
+//   height: 900px;
+// }
