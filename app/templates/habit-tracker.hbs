@@ -5,41 +5,47 @@
 <div class="layout-row">
   <div class="flex-30"></div>
   <div class="flex card-cont">
-      {{#unless habitsProps}}
+    {{#unless habitsProps}}
       <span class="no-habits-message">You have no habits to track!</span>
       <span class="add-one-message">Add one!</span>
       <span class="add-one-arrow">{{paper-icon "arrow-downward"}}</span>
-      {{/unless}}
-      {{#each habitsProps as |habit|}}
-        {{#paper-card as |card|}}
-          {{#card.title as |title|}}
-            {{#title.text as |text|}}
-              {{#text.headline}}{{habit.title}}{{/text.headline}}
-              {{#text.subhead}}{{habit.description}}{{/text.subhead}}
-            {{/title.text}}
+    {{/unless}}
+    {{#each habitsProps as |habit|}}
+    
+      {{#paper-card as |card|}}
+      {{#paper-item onClick=(action "showHabitDetailsDialogAction" habit) class="card-item"}}
+        {{#card.title as |title|}}
+          {{#title.text as |text|}}
+            {{#text.headline}}{{habit.title}}{{/text.headline}}
+            {{#text.subhead}}{{habit.description}}{{/text.subhead}}
+          {{/title.text}}
 
-            {{paper-progress-circular strokeRatio=0.5 diameter=60 value=habit.habitProgress}}
+          {{paper-progress-circular strokeRatio=0.5 diameter=60 value=habit.habitProgress class="asd"}}
 
-            {{#paper-menu as |menu|}}
-              {{#menu.trigger}}
-                {{#paper-button iconButton=true}}
-                  {{paper-icon "list"}}
-                {{/paper-button}}
-              {{/menu.trigger}}
-              {{#menu.content width=2 as |content|}}
-                {{#content.menu-item  onClick=(action "showDeleteDialogAction" habit)}}
-                  <span>{{paper-icon "delete"}}Delete</span>
-                {{/content.menu-item}}
-              {{/menu.content}}
-            {{/paper-menu}}
-          {{/card.title}}
-          {{#card.actions}}
-          {{/card.actions}}
-        {{/paper-card}}
+          {{#paper-menu as |menu|}}
+            {{#menu.trigger}}
+              {{#paper-button class="menu-button" iconButton=true onClick=(action "setCurrentHabit" habit)}}
+                {{paper-icon "list"}}
+              {{/paper-button}}
+            {{/menu.trigger}}
+            {{#menu.content width=2 as |content|}}
+              {{#content.menu-item onClick=(action "showDeleteDialogAction" habit)}}
+                <span>{{paper-icon "delete"}}Delete</span>
+              {{/content.menu-item}}
+              {{#content.menu-item onClick=(action "showEditDialogAction" habit)}}
+                <span>{{paper-icon "edit"}}Edit</span>
+              {{/content.menu-item}}
+            {{/menu.content}}
+          {{/paper-menu}}
+        {{/card.title}}
+        {{#card.actions}}
+        {{/card.actions}}
+        {{/paper-item}}
+      {{/paper-card}}
 
 
 
-      {{/each}}
+    {{/each}}
   </div> 
   <div class="flex-30"></div>
 </div>
@@ -64,7 +70,7 @@
         <div class="layout-row">
 
           <div class="layout-column flex-50">
-            {{form.input label="Title" value=newHabit.title onChange=(action (mut newHabit.title)) required=true}}
+            {{form.input label="Title" maxlength=20 value=newHabit.title onChange=(action (mut newHabit.title)) required=true}}
           </div>
 
           <div class="layout-column flex-50">
@@ -81,7 +87,7 @@
           </div>
 
         </div>
-        <div class="layout-row  ">
+        <div class="layout-row">
           {{paper-input textarea=true block=true label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
             value=newHabit.description onChange=(action (mut newHabit.description))}}
         </div>
@@ -89,6 +95,74 @@
           {{#paper-button raised=true primary=true onClick=(action "addHabit")}}Submit{{/paper-button}}
         </div>
       {{/paper-form}}
+    {{/paper-dialog-content}}
+
+  {{/paper-dialog}}
+{{/if}}
+
+{{#if showEditDialog}}
+  {{#paper-dialog class="flex-77" onClose=(action "closeEditDialogAction" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>Edit "{{currentHabit.title}}"</h2>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true onClick=(action "closeEditDialogAction" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+      {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center" as |form|}}
+        <div class="layout-row">
+
+          <div class="layout-column flex-50">
+            {{form.input label="Title" value=currentHabit.title onChange=(action (mut currentHabit.title)) required=true}}
+          </div>
+
+          <div class="layout-column flex-50">
+            {{paper-input label="Goal Days" type="number" value=currentHabit.daysGoal min=1 max=356 onChange=(action (mut currentHabit.daysGoal)) required=true}}
+            {{!-- {{paper-slider class="flex" min=1 max=356 value=currentHabit.daysGoal onChange=(action (mut currentHabit.daysGoal))}} --}}
+            {{#paper-radio-group
+              groupValue=(readonly currentHabit.daysGoal)
+              onChange=(action (mut currentHabit.daysGoal)) as |group|}}
+              {{#group.radio value=7}} 1 Week {{/group.radio}}
+              {{#group.radio value=30}} 1 Month {{/group.radio}}
+              {{#group.radio value=356}} 1 Year {{/group.radio}}
+            {{/paper-radio-group}}
+
+          </div>
+
+        </div>
+        <div class="layout-row">
+          {{paper-input textarea=true block=true label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
+            value=currentHabit.description onChange=(action (mut currentHabit.description))}}
+        </div>
+        <div class="layout-row">
+          {{#paper-button raised=true primary=true onClick=(action "editHabit" "closeEditDialogAction")}}Submit{{/paper-button}}
+        </div>
+      {{/paper-form}}
+    {{/paper-dialog-content}}
+
+  {{/paper-dialog}}
+{{/if}}
+
+{{#if showHabitDetailsDialog}}
+  {{#paper-dialog class="flex-77" onClose=(action "closeHabitDetailsDialogAction" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>{{currentHabit.title}}</h2>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true onClick=(action "closeHabitDetailsDialogAction" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+   <div class="details-div">
+      <span>Description: {{currentHabit.description}}</span>
+      <br>
+      <span>Goal Days: {{currentHabit.daysGoal}}</span>
+      <br>
+      <span>Habit Progress: {{currentHabit.daysChecked}}/{{currentHabit.daysGoal}}</span>
+    </div>
     {{/paper-dialog-content}}
 
   {{/paper-dialog}}

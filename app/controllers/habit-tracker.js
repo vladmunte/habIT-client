@@ -4,6 +4,8 @@ import { computed } from '@ember/object';
 export default Controller.extend({
     showFormDialog: false,
     showDeleteDialog: false,
+    showHabitDetailsDialog: false,
+    showEditDialog: false,
     confirmation: false,
     habits: computed(function() {
         return this.get('store').findAll('habit');
@@ -41,7 +43,7 @@ export default Controller.extend({
             description: '',
             daysGoal: ''
           });
-          this.set('newHabit', newHabit)
+          this.set('newHabit', newHabit);
           this.set("showFormDialog", true);
         },
         closeFormDialogAction() {
@@ -58,10 +60,31 @@ export default Controller.extend({
         addHabit() {
           this.get('newHabit').save();
           this.set("showFormDialog", false);
+        }, 
+        editHabit() {
+          this.get('currentHabit').save();
+          this.set("showFormDialog", false);
         },
         confirmDelete(habit) {
           this.get('currentHabit').destroyRecord();
           this.set('showDeleteDialog', false);
+        },
+        showHabitDetailsDialogAction(habit) {
+          this.set('currentHabit', habit);
+          this.set('showHabitDetailsDialog', true);
+        },
+        closeHabitDetailsDialogAction() {
+          this.set('showHabitDetailsDialog', false);
+        },
+        showEditDialogAction(habit) {
+          this.set('currentHabit', habit);
+          this.set('showEditDialog', true);
+        },
+        closeEditDialogAction() {
+          this.set('showEditDialog', false);
+        },
+        setCurrentHabit(habit){
+          this.set('currentHabit', habit);
         }
     },
 

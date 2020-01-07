@@ -57,8 +57,20 @@ md-menu-content {
   left: 49.4%;
   font-size: 24px;
 }
-// .container-suprem {
-//   overflow: auto;
-//   width: 75%;
-//   height: 900px;
-// }
+ .menu-button {
+   position: absolute;
+   right: 25px;
+   top: 30px;
+ }
+ .asd {
+   margin-right: 50px;
+   margin-bottom: 10px;
+ }
+
+ .card-item{
+   border: solid 0.5px rgb(225, 225, 225);
+ }
+
+ .details-div {
+   line-height: 1.5em;
+ }
