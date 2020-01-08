@@ -4,7 +4,7 @@
 </div>
 <div class="layout-row">
   <div class="flex-30"></div>
-  <div class="flex card-cont">
+  <div class="flex">
     {{#unless habitsProps}}
       <span class="no-habits-message">You have no habits to track!</span>
       <span class="add-one-message">Add one!</span>
@@ -13,33 +13,31 @@
     {{#each habitsProps as |habit|}}
     
       {{#paper-card as |card|}}
-      {{#paper-item onClick=(action "showHabitDetailsDialogAction" habit) class="card-item"}}
-        {{#card.title as |title|}}
-          {{#title.text as |text|}}
-            {{#text.headline}}{{habit.title}}{{/text.headline}}
-            {{#text.subhead}}{{habit.description}}{{/text.subhead}}
-          {{/title.text}}
-
-          {{paper-progress-circular strokeRatio=0.5 diameter=60 value=habit.habitProgress class="asd"}}
-
-          {{#paper-menu as |menu|}}
-            {{#menu.trigger}}
-              {{#paper-button class="menu-button" iconButton=true onClick=(action "setCurrentHabit" habit)}}
-                {{paper-icon "list"}}
+        {{#paper-item onClick=(action "showHabitDetailsDialogAction" habit) class="card-item"}}
+          {{#card.title as |title|}}
+            {{#title.text as |text|}}
+              {{#text.headline}}{{habit.title}}{{/text.headline}}
+              {{#text.subhead}}{{habit.description}}{{/text.subhead}}
+            {{/title.text}}
+            <div class="progress-div">
+              {{paper-progress-circular strokeRatio=0.15 diameter=100 value=habit.habitProgress class="asd"}}
+              {{paper-progress-circular strokeRatio=0.02 diameter=100 value=100 class="asdf"}}
+              <div class="progress-percent">{{habit.habitProgress}}%</div>
+            </div>
+            <div class="layout-column three-buttons">
+              {{#paper-button onClick=(action "showEditDialogAction" habit)}}
+                {{paper-icon "check_circle"}}
               {{/paper-button}}
-            {{/menu.trigger}}
-            {{#menu.content width=2 as |content|}}
-              {{#content.menu-item onClick=(action "showDeleteDialogAction" habit)}}
-                <span>{{paper-icon "delete"}}Delete</span>
-              {{/content.menu-item}}
-              {{#content.menu-item onClick=(action "showEditDialogAction" habit)}}
-                <span>{{paper-icon "edit"}}Edit</span>
-              {{/content.menu-item}}
-            {{/menu.content}}
-          {{/paper-menu}}
-        {{/card.title}}
-        {{#card.actions}}
-        {{/card.actions}}
+              {{#paper-button onClick=(action "showEditDialogAction" habit)}}
+                {{paper-icon "edit"}}
+              {{/paper-button}}
+              {{#paper-button onClick=(action "showDeleteDialogAction" habit)}}
+                {{paper-icon "delete"}}
+              {{/paper-button}}
+            </div>
+          {{/card.title}}
+          {{#card.actions}}
+          {{/card.actions}}
         {{/paper-item}}
       {{/paper-card}}
 
@@ -47,12 +45,13 @@
 
     {{/each}}
   </div> 
-  <div class="flex-30"></div>
-</div>
-<div class="layout-row layout-align-space-around-end">
-  {{#paper-button class="add-button" fab=true raised=false onClick=(action "showFormDialogAction")}}
-    +
-  {{/paper-button}}
+  <div class="flex-30 right-div">
+    <div class="layout-row layout-align-space-around-end">
+      {{#paper-button class="add-button" fab=true raised=false onClick=(action "showFormDialogAction")}}
+        +
+      {{/paper-button}}
+    </div>
+  </div>
 </div>
 
 {{#if showFormDialog}}
@@ -156,13 +155,13 @@
     {{/paper-toolbar}}
 
     {{#paper-dialog-content}}
-   <div class="details-div">
-      <span>Description: {{currentHabit.description}}</span>
-      <br>
-      <span>Goal Days: {{currentHabit.daysGoal}}</span>
-      <br>
-      <span>Habit Progress: {{currentHabit.daysChecked}}/{{currentHabit.daysGoal}}</span>
-    </div>
+      <div class="details-div">
+        <span>Description: {{currentHabit.description}}</span>
+        <br>
+        <span>Goal Days: {{currentHabit.daysGoal}}</span>
+        <br>
+        <span>Habit Progress: {{currentHabit.daysChecked}}/{{currentHabit.daysGoal}}</span>
+      </div>
     {{/paper-dialog-content}}
 
   {{/paper-dialog}}
@@ -180,4 +179,22 @@
   {{/paper-dialog}}
 {{/if}}
 
+
+{{#if showDeletedHabitToast}}
+  {{#paper-toast duration=2000 capsule=capsule swipeToClose=swipeToClose onClose=(action "closeToastAction") as |toast|}}
+    {{#toast.text}}Habit Deleted!{{/toast.text}}
+  {{/paper-toast}}
+{{/if}}
+
+{{#if showAddedHabitToast}}
+  {{#paper-toast duration=2000 capsule=capsule swipeToClose=swipeToClose onClose=(action "closeToastAction") as |toast|}}
+    {{#toast.text}}Habit Added!{{/toast.text}}
+  {{/paper-toast}}
+{{/if}}
+
+{{#if showEditedHabitToast}}
+  {{#paper-toast duration=2000 capsule=capsule swipeToClose=swipeToClose onClose=(action "closeToastAction") as |toast|}}
+    {{#toast.text}}Habit Edited!{{/toast.text}}
+  {{/paper-toast}}
+{{/if}}
 

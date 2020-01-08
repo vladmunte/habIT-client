@@ -6,6 +6,9 @@ export default Controller.extend({
     showDeleteDialog: false,
     showHabitDetailsDialog: false,
     showEditDialog: false,
+    showDeletedHabitToast: false,
+    showAddedHabitToast: false,
+    showEditedHabitToast: false,
     confirmation: false,
     habits: computed(function() {
         return this.get('store').findAll('habit');
@@ -58,15 +61,21 @@ export default Controller.extend({
           this.set("showDeleteDialog", true);
         },
         addHabit() {
-          this.get('newHabit').save();
+          this.get('newHabit').save().then( () => {
+            this.set('showAddedHabitToast', true);
+          });
           this.set("showFormDialog", false);
         }, 
         editHabit() {
-          this.get('currentHabit').save();
-          this.set("showFormDialog", false);
+          this.get('currentHabit').save().then( () => {
+            this.set("showEditDialog", false);
+            this.set('showEditedHabitToast', true)
+          })
         },
         confirmDelete(habit) {
-          this.get('currentHabit').destroyRecord();
+          this.get('currentHabit').destroyRecord().then( () =>  {
+            this.set('showDeletedHabitToast', true);
+          });
           this.set('showDeleteDialog', false);
         },
         showHabitDetailsDialogAction(habit) {
@@ -85,6 +94,11 @@ export default Controller.extend({
         },
         setCurrentHabit(habit){
           this.set('currentHabit', habit);
+        },
+        closeToastAction() {
+          this.set('showDeletedHabitToast', false);
+          this.set('showAddedHabitToast', false);
+          this.set('showEditedHabitToast', false)
         }
     },
 

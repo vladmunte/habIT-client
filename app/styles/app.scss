@@ -57,15 +57,14 @@ md-menu-content {
   left: 49.4%;
   font-size: 24px;
 }
- .menu-button {
-   position: absolute;
-   right: 25px;
-   top: 30px;
- }
  .asd {
    margin-right: 50px;
-   margin-bottom: 10px;
+   top: 16px;
  }
+ .asdf {
+    position: absolute;
+    top: 40px;
+}
 
  .card-item{
    border: solid 0.5px rgb(225, 225, 225);
@@ -73,4 +72,33 @@ md-menu-content {
 
  .details-div {
    line-height: 1.5em;
+ }
+
+ .md-button {
+   margin: 0;
+ }
+
+.progress-div {
+   top: 15px;
+   text-align: center;
+ }
+ .progress-percent {
+    position: relative;
+    top: -50px;
+    left: -20px;
+ }
+
+ .three-buttons {
+   display: flex;
+   justify-content: center;
+ }
+
+ .right-div {
+   max-height: 100vh;
+ }
+
+ .toolbar-div {
+   position: sticky;
+   top: 0px;
+   z-index: 10000;
  }
