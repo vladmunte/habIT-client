@@ -14,11 +14,6 @@ $warn: "pink";
   width: 500px;
 }
 
-.add-button {
-  font-size: 45px;
-  font-weight: 100;
-  color: #FFF;
-}
 
 md-menu-content {
   padding: 0;
@@ -59,16 +54,31 @@ md-menu-content {
 }
  .asd {
    margin-right: 50px;
-   top: 16px;
+   top: 10px;
  }
  .asdf {
     position: absolute;
-    top: 40px;
+    top: 34px;
 }
 
  .card-item{
-   border: solid 0.5px rgb(225, 225, 225);
+  //  border: solid 0.5px rgb(225, 225, 225);
+   width: 30vw;
+   height: 16vh;
  }
+ .card-add-item{
+  background-color: rgb(240, 240, 240);
+  display: flex;
+}
+.card-add-text {
+  position: relative;
+  left: 50%;
+  margin-left: -30px;
+  font-size: 90px;
+  color: rgb(200, 200, 200);
+  align-self: flex-end;
+}
+
 
  .details-div {
    line-height: 1.5em;
@@ -84,21 +94,34 @@ md-menu-content {
  }
  .progress-percent {
     position: relative;
-    top: -50px;
-    left: -20px;
+    top: -59px;
+    left: -21px;
  }
 
  .three-buttons {
    display: flex;
    justify-content: center;
- }
-
- .right-div {
-   max-height: 100vh;
+   position: relative;
+   left: 30px;
  }
 
  .toolbar-div {
    position: sticky;
    top: 0px;
-   z-index: 10000;
+   z-index: 100;
+ }
+
+ .text-area-div {
+  word-wrap: break-word;
+  overflow: hidden;
+  width:275px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+ }
+
+ .container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
  }

@@ -9,6 +9,9 @@ export default Controller.extend({
     showDeletedHabitToast: false,
     showAddedHabitToast: false,
     showEditedHabitToast: false,
+    showCheckedToast: false,
+    showGoalDoneToasta: false,
+    isDone: false,
     confirmation: false,
     habits: computed(function() {
         return this.get('store').findAll('habit');
@@ -98,8 +101,28 @@ export default Controller.extend({
         closeToastAction() {
           this.set('showDeletedHabitToast', false);
           this.set('showAddedHabitToast', false);
-          this.set('showEditedHabitToast', false)
+          this.set('showEditedHabitToast', false);
+          this.set('showCheckedToast', false);
+          this.set('showGoalDoneToast', false);
+        },
+        showCheckedDialogAction(){
+          // this.set('showCheckedToast', true);
+        },
+        incrementProgress(habit){
+          this.set('currentHabit', habit)
+          const daysChecked = this.get('currentHabit.daysChecked');
+          const daysGoal = this.get('currentHabit.daysGoal');
+          if(daysChecked >= daysGoal) this.set('isDone', true);
+          if(!this.get('isDone')){
+            this.set('currentHabit.daysChecked', daysChecked + 1);
+            this.get('currentHabit').save().then( () => this.set('showCheckedToast', true))
+          } else {
+            this.set('showGoalDoneToast', true);
+            this.set('isDone', false);
+          }
+          daysChecked = 1;
         }
+
     },
 
 });

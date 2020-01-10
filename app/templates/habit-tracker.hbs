@@ -1,23 +1,18 @@
-
-<div class="container-suprem">
-
-</div>
-<div class="layout-row">
-  <div class="flex-30"></div>
-  <div class="flex">
+<div class="layout-row container">
     {{#unless habitsProps}}
       <span class="no-habits-message">You have no habits to track!</span>
       <span class="add-one-message">Add one!</span>
-      <span class="add-one-arrow">{{paper-icon "arrow-downward"}}</span>
     {{/unless}}
     {{#each habitsProps as |habit|}}
-    
-      {{#paper-card as |card|}}
+      {{#paper-card class="card-item" as |card|}}
+        {{#paper-tooltip position="bottom"}}
+          Click habit for details.
+        {{/paper-tooltip}}
         {{#paper-item onClick=(action "showHabitDetailsDialogAction" habit) class="card-item"}}
           {{#card.title as |title|}}
             {{#title.text as |text|}}
               {{#text.headline}}{{habit.title}}{{/text.headline}}
-              {{#text.subhead}}{{habit.description}}{{/text.subhead}}
+              {{#text.subhead class="text-area-div"}}{{habit.description}}{{/text.subhead}}
             {{/title.text}}
             <div class="progress-div">
               {{paper-progress-circular strokeRatio=0.15 diameter=100 value=habit.habitProgress class="asd"}}
@@ -25,33 +20,37 @@
               <div class="progress-percent">{{habit.habitProgress}}%</div>
             </div>
             <div class="layout-column three-buttons">
-              {{#paper-button onClick=(action "showEditDialogAction" habit)}}
+              {{#paper-button  iconButton=true onClick=(action "incrementProgress" habit)}}
                 {{paper-icon "check_circle"}}
+                {{#paper-tooltip position="right"}}
+                  Check
+                {{/paper-tooltip}}
               {{/paper-button}}
-              {{#paper-button onClick=(action "showEditDialogAction" habit)}}
+              {{#paper-button iconButton=true onClick=(action "showEditDialogAction" habit)}}
                 {{paper-icon "edit"}}
+                {{#paper-tooltip position="right"}}
+                  Edit
+                {{/paper-tooltip}}
               {{/paper-button}}
-              {{#paper-button onClick=(action "showDeleteDialogAction" habit)}}
+              {{#paper-button iconButton=true onClick=(action "showDeleteDialogAction" habit)}}
                 {{paper-icon "delete"}}
+                {{#paper-tooltip position="right"}}
+                  Delete
+                {{/paper-tooltip}}
               {{/paper-button}}
+              
             </div>
           {{/card.title}}
           {{#card.actions}}
           {{/card.actions}}
         {{/paper-item}}
       {{/paper-card}}
-
-
-
-    {{/each}}
-  </div> 
-  <div class="flex-30 right-div">
-    <div class="layout-row layout-align-space-around-end">
-      {{#paper-button class="add-button" fab=true raised=false onClick=(action "showFormDialogAction")}}
-        +
-      {{/paper-button}}
-    </div>
-  </div>
+      {{/each}}
+      {{#paper-card class="card-item"}}
+        {{#paper-item class="card-item card-add-item" onClick=(action "showFormDialogAction")}}
+          <span class="card-add-text">+</span>
+        {{/paper-item}}
+      {{/paper-card}}
 </div>
 
 {{#if showFormDialog}}
@@ -87,7 +86,7 @@
 
         </div>
         <div class="layout-row">
-          {{paper-input textarea=true block=true label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
+          {{paper-input textarea=true block=true class="text-area-div" label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
             value=newHabit.description onChange=(action (mut newHabit.description))}}
         </div>
         <div class="layout-row">
@@ -195,6 +194,19 @@
 {{#if showEditedHabitToast}}
   {{#paper-toast duration=2000 capsule=capsule swipeToClose=swipeToClose onClose=(action "closeToastAction") as |toast|}}
     {{#toast.text}}Habit Edited!{{/toast.text}}
+  {{/paper-toast}}
+{{/if}}
+
+
+{{#if showCheckedToast}}
+  {{#paper-toast duration=2000 capsule=capsule swipeToClose=swipeToClose onClose=(action "closeToastAction") as |toast|}}
+    {{#toast.text}}Congratulations! Keep it up!{{/toast.text}}
+  {{/paper-toast}}
+{{/if}}
+
+{{#if showGoalDoneToast}}
+  {{#paper-toast duration=2000 capsule=capsule swipeToClose=swipeToClose onClose=(action "closeToastAction") as |toast|}}
+    {{#toast.text}}Your goal was accomplished!{{/toast.text}}
   {{/paper-toast}}
 {{/if}}
 
