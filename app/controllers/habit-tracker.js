@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
+    categories: ['Lifestyle', 'Sport', 'Financial'],
     showFormDialog: false,
     showDeleteDialog: false,
     showHabitDetailsDialog: false,
@@ -23,11 +24,13 @@ export default Controller.extend({
         var title = this.get('title');
         var description = this.get('description');
         var daysGoal = this.get('daysGoal');
+        var category = this.get('category');
 
         var newHabit = this.store.createRecord('habit', {
             title: title,
             description: description,
-            daysGoal: daysGoal
+            daysGoal: daysGoal,
+            category: category
         });
 
         return newHabit.save();
@@ -110,7 +113,7 @@ export default Controller.extend({
         },
         incrementProgress(habit){
           this.set('currentHabit', habit)
-          const daysChecked = this.get('currentHabit.daysChecked');
+          var daysChecked = this.get('currentHabit.daysChecked');
           const daysGoal = this.get('currentHabit.daysGoal');
           if(daysChecked >= daysGoal) this.set('isDone', true);
           if(!this.get('isDone')){

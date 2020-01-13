@@ -3,6 +3,7 @@ $accent: "light-green";
 $warn: "pink";
 
 @import 'ember-paper';
+@import "ember-searchable-select/style";
 
 .quote-align {
   margin-top: 20%;

@@ -6,4 +6,5 @@ export default DS.Model.extend({
   daysChecked: DS.attr(),
   daysGoal: DS.attr(),
   habitProgress: DS.attr(),
+  category: DS.attr(),
 });

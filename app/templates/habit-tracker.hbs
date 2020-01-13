@@ -4,7 +4,7 @@
       <span class="add-one-message">Add one!</span>
     {{/unless}}
     {{#each habitsProps as |habit|}}
-      {{#paper-card class="card-item" as |card|}}
+      {{#paper-card class="card-item {{progressColor}}" as |card|}}
         {{#paper-tooltip position="bottom"}}
           Click habit for details.
         {{/paper-tooltip}}
@@ -15,7 +15,7 @@
               {{#text.subhead class="text-area-div"}}{{habit.description}}{{/text.subhead}}
             {{/title.text}}
             <div class="progress-div">
-              {{paper-progress-circular strokeRatio=0.15 diameter=100 value=habit.habitProgress class="asd"}}
+              {{paper-progress-circular strokeRatio=0.15 diameter=100 min=0 max=100 value=habit.habitProgress class="asd"}}
               {{paper-progress-circular strokeRatio=0.02 diameter=100 value=100 class="asdf"}}
               <div class="progress-percent">{{habit.habitProgress}}%</div>
             </div>
@@ -51,6 +51,7 @@
           <span class="card-add-text">+</span>
         {{/paper-item}}
       {{/paper-card}}
+      
 </div>
 
 {{#if showFormDialog}}
@@ -65,10 +66,13 @@
 
     {{#paper-dialog-content}}
       {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center" as |form|}}
-        <div class="layout-row">
+        <div class="layout-row layout-align-space-around-center">
 
           <div class="layout-column flex-50">
             {{form.input label="Title" maxlength=20 value=newHabit.title onChange=(action (mut newHabit.title)) required=true}}
+            {{#paper-select options=categories label="Category" required=true selected=newHabit.category onChange=(action (mut newHabit.category)) as |category|}}
+              {{category}}
+            {{/paper-select}}
           </div>
 
           <div class="layout-column flex-50">
@@ -81,7 +85,6 @@
               {{#group.radio value=30}} 1 Month {{/group.radio}}
               {{#group.radio value=356}} 1 Year {{/group.radio}}
             {{/paper-radio-group}}
-
           </div>
 
         </div>
@@ -114,6 +117,9 @@
 
           <div class="layout-column flex-50">
             {{form.input label="Title" value=currentHabit.title onChange=(action (mut currentHabit.title)) required=true}}
+                        {{#paper-select options=categories label="Category" required=true selected=currentHabit.category onChange=(action (mut currentHabit.category)) as |category|}}
+              {{category}}
+            {{/paper-select}}
           </div>
 
           <div class="layout-column flex-50">
@@ -160,6 +166,8 @@
         <span>Goal Days: {{currentHabit.daysGoal}}</span>
         <br>
         <span>Habit Progress: {{currentHabit.daysChecked}}/{{currentHabit.daysGoal}}</span>
+        <br>
+        <span>Category: {{currentHabit.category}}</span>
       </div>
     {{/paper-dialog-content}}
 
@@ -209,4 +217,3 @@
     {{#toast.text}}Your goal was accomplished!{{/toast.text}}
   {{/paper-toast}}
 {{/if}}
-
