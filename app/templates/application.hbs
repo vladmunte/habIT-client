@@ -1,18 +1,16 @@
 <div class="toolbar-div">
 {{#paper-toolbar as |toolbar|}}
   {{#toolbar.tools}}
-    {{#link-to "index"}}
-      <h2>Welcome to habIT</h2>
-    {{/link-to}}
-    <span class="flex"></span>
-    {{#link-to "about"}}
+      <img src="assets/images/logo8.png">
+      <span class="flex"></span>
+    {{#link-to "dashboard"}}
       {{#paper-button}}
-        <p>About</p>
+        <p>Dashboard</p>
       {{/paper-button}}
     {{/link-to}}
-    {{#link-to "contact"}}
+    {{#link-to "habit-tracker"}}
       {{#paper-button}}
-        <p>Contact</p>
+        <p>Home</p>
       {{/paper-button}}
     {{/link-to}}
   {{/toolbar.tools}}
