@@ -2,7 +2,8 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
-    categories: ['Lifestyle', 'Sport', 'Financial'],
+  
+    categories: ['Lifestyle', 'Sport', 'Financial', 'Social', 'Culture'],
     showFormDialog: false,
     showDeleteDialog: false,
     showHabitDetailsDialog: false,
@@ -14,6 +15,7 @@ export default Controller.extend({
     showGoalDoneToasta: false,
     isDone: false,
     confirmation: false,
+    lifestyleDays: null,
     habits: computed(function() {
         return this.get('store').findAll('habit');
     }),
@@ -36,6 +38,7 @@ export default Controller.extend({
         return newHabit.save();
 
     }),
+
 
     newHabit: computed(function() {
       return this.store.createRecord('habit', {
@@ -109,22 +112,40 @@ export default Controller.extend({
           this.set('showGoalDoneToast', false);
         },
         showCheckedDialogAction(){
-          // this.set('showCheckedToast', true);
+          //this.set('showCheckedToast', true);
         },
         incrementProgress(habit){
           this.set('currentHabit', habit)
-          var daysChecked = this.get('currentHabit.daysChecked');
+          let daysChecked = this.get('currentHabit.daysChecked');
           const daysGoal = this.get('currentHabit.daysGoal');
+          const category = this.get('currentHabit.category');
+          let lifestyleDays = this.get('lifestyleDays');
           if(daysChecked >= daysGoal) this.set('isDone', true);
           if(!this.get('isDone')){
             this.set('currentHabit.daysChecked', daysChecked + 1);
-            this.get('currentHabit').save().then( () => this.set('showCheckedToast', true))
+            this.get('currentHabit').save().then( () => this.set('showCheckedToast', true));
+            switch(category) {
+              case 'Lifestyle':
+                this.set('lifestyleDays', lifestyleDays + 1)
+                break;
+              default:
+                break;
+            }
           } else {
             this.set('showGoalDoneToast', true);
             this.set('isDone', false);
           }
           daysChecked = 1;
-        }
+        },
+    //     sendRequest() {
+    //   return this.get('ajax').request('/habits/sport_habits_days', {
+    //     method: 'GET',
+    //     data: {
+    //       totalDays: sportHabitsTotalDays
+    //     }
+    //   })
+    // }
+
 
     },
 

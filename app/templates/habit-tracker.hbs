@@ -16,7 +16,8 @@
             {{/title.text}}
             <div class="progress-div">
               {{paper-progress-circular strokeRatio=0.15 diameter=100 min=0 max=100 value=habit.habitProgress class="asd"}}
-              {{paper-progress-circular strokeRatio=0.02 diameter=100 value=100 class="asdf"}}
+              {{paper-progress-circular strokeRatio=0.02 diameter=100 value=100 class="outer-progress-line"}}
+              {{paper-progress-circular strokeRatio=0.03 diameter=72 value=100 class="inner-progress-line"}}
               <div class="progress-percent">{{habit.habitProgress}}%</div>
             </div>
             <div class="layout-column three-buttons">
@@ -53,7 +54,7 @@
       {{/paper-card}}
       
 </div>
-
+{{lifestyleDays}}
 {{#if showFormDialog}}
   {{#paper-dialog class="flex-77" onClose=(action "closeFormDialogAction" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
     {{#paper-toolbar}}

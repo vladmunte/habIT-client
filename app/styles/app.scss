@@ -57,9 +57,14 @@ md-menu-content {
    margin-right: 50px;
    top: 17px;
  }
- .asdf {
+ .outer-progress-line {
     position: absolute;
-    top: 40px;
+    top: 41px;
+}
+.inner-progress-line {
+  position: absolute;
+  top: 55px;
+  left: 321px;
 }
 
  .card-item{
@@ -95,7 +100,7 @@ md-menu-content {
  }
  .progress-percent {
     position: relative;
-    top: -59px;
+    top: -51px;
     left: -21px;
  }
 
@@ -125,4 +130,15 @@ md-menu-content {
    display: flex;
    flex-wrap: wrap;
    justify-content: space-evenly;
+ }
+
+ .habits-chart {
+   position: relative;
+   top: 175px;
+  text-align: center;
+  font-size: 40px;
+ }
+
+ .habits-chart-title {
+  margin-bottom: 40px;
  }

@@ -1,7 +1,13 @@
-import Controller from '@ember/controller';
+import Controller, {inject as controller} from '@ember/controller';
 import { computed } from '@ember/object';
+import Ember from 'ember';
 
 export default Controller.extend({
+  // ajax: Ember.inject.service(),
+  habitTracker: controller('habit-tracker'),
+  lifestyleDays: computed(function() {  
+    return this.habitTracker.get('lifestyleDays');
+  }),
   habits: computed(function() {  
     return this.get('store').findAll('habit');
   }),
@@ -17,12 +23,18 @@ export default Controller.extend({
   financialData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
     return this.get('habitsProps').filterBy('category','Financial').length;
   }),
+  socialData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
+    return this.get('habitsProps').filterBy('category','Social').length;
+  }),
+  cultureData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
+    return this.get('habitsProps').filterBy('category','Culture').length;
+  }),
   priorityOptions: computed('lifestyleData', 'sportData', 'financialData', function() {
     return {
-      labels: ['Lifestyle', 'Sport', 'Financial'],
+      labels: ['Lifestyle', 'Sport', 'Financial', 'Social', 'Culture'],
       datasets: [
         {
-          data: [this.get('lifestyleData'), this.get('sportData'), this.get('financialData')],
+          data: [this.get('lifestyleData'), this.get('sportData'), this.get('financialData'), this.get('socialData'), this.get('cultureData')],
           backgroundColor: [
             'rgba(255, 99, 132)',
             'rgba(54, 162, 235)',
@@ -40,12 +52,17 @@ export default Controller.extend({
             'rgba(255, 159, 64, 1)'
           ],
           borderWidth: 1,
-          barPercentage: 0.33,
-          
+
         }
       ],
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-
     };
   }),
+  actions: {
+    sendRequest() {
+      return this.get('ajax').request('/habits/sport_habits_days', {
+        method: 'GET'
+      })
+    }
+  }
+
 });
