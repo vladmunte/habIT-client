@@ -133,10 +133,11 @@ md-menu-content {
  }
 
  .habits-chart {
-   position: relative;
-   top: 175px;
+  position: relative;
   text-align: center;
   font-size: 40px;
+  border: solid 1px black;
+  padding-bottom: 20px;
  }
 
  .habits-chart-title {

@@ -5,15 +5,13 @@
       <img src="assets/images/logo8.png">
     {{/link-to}}
       <span class="flex"></span>
-    {{#link-to "dashboard"}}
-      {{#paper-button}}
+      {{#current-route-button route="dashboard"}}
         <p>Dashboard</p>
-      {{/paper-button}}
-    {{/link-to}}
+      {{/current-route-button}}
     {{#link-to "habit-tracker"}}
-      {{#paper-button}}
+      {{#current-route-button route="habit-tracker"}}
         <p>Home</p>
-      {{/paper-button}}
+      {{/current-route-button}}
     {{/link-to}}
   {{/toolbar.tools}}
 {{/paper-toolbar}}
