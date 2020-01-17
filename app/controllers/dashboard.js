@@ -9,6 +9,21 @@ export default Controller.extend({
   financialTotalDays: null,
   socialTotalDays: null,
   cultureTotalDays: null,
+  achievedFirstSport: false,
+  achievedFirstLifestyle: false,
+  achievedFirstFinancial: false,
+  achievedFirstSocial: false,
+  achievedFirstCulture: false,
+  achievedTenLifestyle: false,
+  achievedTenSport: false,
+  achievedTenFinancial: false,
+  achievedTenSocial: false,
+  achievedTenCulture: false,
+  achievedHundredLifestyle: false,
+  achievedHundredSport: false,
+  achievedHundredFinancial: false,
+  achievedHundredSocial: false,
+  achievedHundredCulture: false,
   init() {
     this._super(...arguments);
     this.get('sportDaysFetch');
@@ -17,7 +32,6 @@ export default Controller.extend({
     this.get('socialDaysFetch');
     this.get('cultureDaysFetch');
   },
-
   sportDaysFetch: computed(async function() {
     return fetch('habits/sport_habits_days')
       .then((response) => {
@@ -81,18 +95,61 @@ export default Controller.extend({
     return this.get('habits');
   }),
   lifestyleData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
-      return this.get('habitsProps').filterBy('category','Lifestyle').length;
+    if(this.get('habitsProps').filterBy('category','Lifestyle').length > 0)
+      {
+        this.set('achievedFirstLifestyle', true);
+      }
+      if(this.get('lifestyleTotalDays') > 9)
+      {
+        this.set('achievedTenLifestyle', true);
+      }
+    return this.get('habitsProps').filterBy('category','Lifestyle').length;
   }),
   sportData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
+    if(this.get('habitsProps').filterBy('category','Sport').length > 0)
+    {
+      this.set('achievedFirstSport', true);
+    }
+    if(this.get('sportTotalDays') > 9)
+    {
+      this.set('achievedTenSport', true);
+    }
+    if (this.get('sportTotalDays') > 99) {
+      this.set('achievedHundredSport', true);
+    }
     return this.get('habitsProps').filterBy('category','Sport').length;
   }),
   financialData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
+    if(this.get('habitsProps').filterBy('category','Financial').length > 0)
+    {
+      this.set('achievedFirstFinancial', true);
+    }
+    if(this.get('financialTotalDays') > 9)
+    {
+      this.set('achievedTenFinancial', true);
+    }
     return this.get('habitsProps').filterBy('category','Financial').length;
   }),
   socialData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
+    if(this.get('habitsProps').filterBy('category','Social').length > 0)
+    {
+      this.set('achievedFirstSocial', true);
+    }
+    if(this.get('socialTotalDays') > 9)
+    {
+      this.set('achievedTenSocial', true);
+    }
     return this.get('habitsProps').filterBy('category','Social').length;
   }),
   cultureData: computed('habitsProps.length', 'habitsProps.@each.category', function(){
+    if(this.get('habitsProps').filterBy('category','Culture').length > 0)
+    {
+      this.set('achievedFirstCulture', true);
+    }
+    if(this.get('cultureTotalDays') > 9)
+    {
+      this.set('achievedTenCulture', true);
+    }
     return this.get('habitsProps').filterBy('category','Culture').length;
   }),
   priorityOptions: computed('lifestyleData', 'sportData', 'financialData', function() {

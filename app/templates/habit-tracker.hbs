@@ -1,3 +1,4 @@
+
 <div class="layout-row container">
     {{#unless habitsProps}}
       <span class="no-habits-message">You have no habits to track!</span>
@@ -54,7 +55,7 @@
       {{/paper-card}}
       
 </div>
-{{lifestyleDays}}
+
 {{#if showFormDialog}}
   {{#paper-dialog class="flex-77" onClose=(action "closeFormDialogAction" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
     {{#paper-toolbar}}
@@ -66,7 +67,7 @@
     {{/paper-toolbar}}
 
     {{#paper-dialog-content}}
-      {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center" as |form|}}
+      {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center"  onSubmit=(action "addHabit")as |form|}}
         <div class="layout-row layout-align-space-around-center">
 
           <div class="layout-column flex-50">
@@ -94,7 +95,7 @@
             value=newHabit.description onChange=(action (mut newHabit.description))}}
         </div>
         <div class="layout-row">
-          {{#paper-button raised=true primary=true onClick=(action "addHabit")}}Submit{{/paper-button}}
+          {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
         </div>
       {{/paper-form}}
     {{/paper-dialog-content}}
@@ -162,13 +163,13 @@
 
     {{#paper-dialog-content}}
       <div class="details-div">
-        <span>Description: {{currentHabit.description}}</span>
+        <span class="details-text">Description:</span> {{currentHabit.description}}
         <br>
-        <span>Goal Days: {{currentHabit.daysGoal}}</span>
+        <span class="details-text">Goal Days:</span> {{currentHabit.daysGoal}}
         <br>
-        <span>Habit Progress: {{currentHabit.daysChecked}}/{{currentHabit.daysGoal}}</span>
+        <span class="details-text">Habit Progress:</span> {{currentHabit.daysChecked}}/{{currentHabit.daysGoal}}
         <br>
-        <span>Category: {{currentHabit.category}}</span>
+        <span class="details-text">Category:</span> {{currentHabit.category}}
       </div>
     {{/paper-dialog-content}}
 

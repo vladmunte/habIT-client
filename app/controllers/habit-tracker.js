@@ -15,7 +15,6 @@ export default Controller.extend({
     showGoalDoneToasta: false,
     isDone: false,
     confirmation: false,
-    lifestyleDays: null,
     habits: computed(function() {
         return this.get('store').findAll('habit');
     }),
@@ -124,27 +123,12 @@ export default Controller.extend({
           if(!this.get('isDone')){
             this.set('currentHabit.daysChecked', daysChecked + 1);
             this.get('currentHabit').save().then( () => this.set('showCheckedToast', true));
-            switch(category) {
-              case 'Lifestyle':
-                this.set('lifestyleDays', lifestyleDays + 1)
-                break;
-              default:
-                break;
-            }
           } else {
             this.set('showGoalDoneToast', true);
             this.set('isDone', false);
           }
           daysChecked = 1;
         },
-    //     sendRequest() {
-    //   return this.get('ajax').request('/habits/sport_habits_days', {
-    //     method: 'GET',
-    //     data: {
-    //       totalDays: sportHabitsTotalDays
-    //     }
-    //   })
-    // }
 
 
     },
