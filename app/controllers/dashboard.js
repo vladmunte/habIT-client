@@ -69,7 +69,7 @@ export default Controller.extend({
         return response.json();
       }).then(dayz => {
         const noDays = dayz.days;
-        this.set('socialTotalDays', noDays);
+        this.set('socialTotalDays', this.get('socialTotalDays') + noDays);
         return noDays;
       });
   }),
