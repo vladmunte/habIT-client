@@ -1,13 +1,16 @@
-<div class="layout-row" style="background-color: #e0e0e0;">
+<div class="layout-row flex charts-container layout-xs-column" style="background-color: #e0e0e0;">
   <div class="layout-column flex habits-chart">
     <span class="habits-chart-title">Habits Stats</span>
     {{ember-chart type="doughnut" data=priorityOptions height=400 width=800}}
   </div>
-  <div class="layout-column flex habits-chart">
+  <div class="flex layout-column habits-chart">
     <span class="habits-chart-title">Habits Days Stats</span>
     {{ember-chart type="doughnut" data=priorityOptions2 height=400 width=800}}
   </div>
 </div>
+{{#paper-button class="achiev-button" onClick=(action "showMobileAchievDialogAction")}}
+Achievements
+{{/paper-button}}
 
 <div class="layout-row achiev-container">
   <div class="layout-row achiev-row">
@@ -125,10 +128,143 @@
     </div>
   {{/paper-card}}
   </div>
-
-
 </div>
 
-<span class="test123456"></span>
+{{#if showMobileAchievDialog}}
+  {{#paper-dialog class="flex-77" onClose=(action "closeDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>Achievements</h2>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true onClick=(action "closeDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+        <div class="layout-column achiev-container-button">
+  <div class="layout-column achiev-column">
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedFirstLifestyle "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THAT'S A FIRST...(lifestyle)</span>
+      <br>
+      <span class="achiev-desc">First Lifestyle habit created!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedFirstSport "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THAT'S A FIRST...(sport)</span>
+      <br>
+      <span class="achiev-desc">First Sport habit created!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedFirstFinancial "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THAT'S A FIRST...(financial)</span>
+      <br>
+      <span class="achiev-desc">First Financial habit created!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedFirstSocial "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THAT'S A FIRST...(social)</span>
+      <br>
+      <span class="achiev-desc">First Social habit created!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedFirstCulture "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THAT'S A FIRST...(culture)</span>
+      <br>
+      <span class="achiev-desc">First Culture habit created!</span>
+    </div>
+  {{/paper-card}}
+  </div>
+
+
+  <div class="layout-column achiev-column">
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedTenLifestyle "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">TENtacles...(lifestyle)</span>
+      <br>
+      <span class="achiev-desc">10 Lifestyle days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedTenSport "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">TENtacles...(sport)</span>
+      <br>
+      <span class="achiev-desc">10 Sport days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedTenFinancial "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">TENtacles...(financial)</span>
+      <br>
+      <span class="achiev-desc">10 Financial days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedTenSocial "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">TENtacles...(social)</span>
+      <br>
+      <span class="achiev-desc">10 Social days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedTenCulture "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">TENtacles...(culture)</span>
+      <br>
+      <span class="achiev-desc">10 Culture days checked!</span>
+    </div>
+  {{/paper-card}}
+  </div>
+
+
+    <div class="layout-column achiev-column">
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedHundredLifestyle "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THE ONE HUNDRED...(lifestyle)</span>
+      <br>
+      <span class="achiev-desc">100 Lifestyle days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedHundredSport "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THE ONE HUNDRED...(sport)</span>
+      <br>
+      <span class="achiev-desc">100 Sport days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedHundredFinancial "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THE ONE HUNDRED...(sport)</span>
+      <br>
+      <span class="achiev-desc">100 Sport days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedHundredSocial "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THE ONE HUNDRED...(social)</span>
+      <br>
+      <span class="achiev-desc">100 Social days checked!</span>
+    </div>
+  {{/paper-card}}
+  {{#paper-card class="achiev-card-corners"}}
+    <div class={{if achievedHundredCulture "achiev-card-true" "achiev-card"}}>
+      <span class="achiev-title">THE ONE HUNDRED...(culture)</span>
+      <br>
+      <span class="achiev-desc">100 Culture days checked!</span>
+    </div>
+  {{/paper-card}}
+  </div>
+</div>
+    {{/paper-dialog-content}}
+
+    {{#paper-dialog-actions class="layout-row"}}
+
+      {{#paper-button onClick=(action "closeDialog" "cancel")}}Cancel{{/paper-button}}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}
 
 {{outlet}}

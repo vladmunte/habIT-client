@@ -76,9 +76,9 @@ export default Controller.extend({
         }, 
         editHabit() {
           this.get('currentHabit').save().then( () => {
-            this.set("showEditDialog", false);
             this.set('showEditedHabitToast', true)
-          })
+          });
+          this.set("showEditDialog", false);
         },
         confirmDelete(habit) {
           this.get('currentHabit').destroyRecord().then( () =>  {
@@ -111,7 +111,7 @@ export default Controller.extend({
           this.set('showGoalDoneToast', false);
         },
         showCheckedDialogAction(){
-          //this.set('showCheckedToast', true);
+          // this.set('showCheckedToast', true);
         },
         incrementProgress(habit){
           this.set('currentHabit', habit)

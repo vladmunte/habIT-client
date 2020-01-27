@@ -15,13 +15,14 @@
           {{#card.title as |title|}}
             {{#title.text as |text|}}
               {{#text.headline class="titlulmalefic"}}{{habit.title}}{{/text.headline}}
-              {{#text.subhead class="text-area-div"}}{{habit.description}}{{/text.subhead}}
+              {{#text.subhead class="text-area-text"}}{{habit.description}}{{/text.subhead}}
             {{/title.text}}
           {{/card.title}}
         </div>
             <div class="progress-div" {{action "showHabitDetailsDialogAction" habit}}>
               {{paper-progress-circular strokeRatio=0.15 diameter=120 min=0 max=100 value=habit.habitProgress class="progress aaa"}}
               {{paper-progress-circular strokeRatio=0.15 diameter=70 min=0 max=100 value=habit.habitProgress class="progress bbb"}}
+              {{paper-progress-circular strokeRatio=0.15 diameter=50 min=0 max=100 value=habit.habitProgress class="progress ccc"}}
               <div class="progress-percent">{{habit.habitProgress}}%</div>
             </div>
             <div class="layout-column three-buttons">
@@ -75,11 +76,15 @@
         {{!-- </div> --}}
       {{/paper-card}}
       {{/each}}
-      {{#paper-card class="card-item"}}
+      {{#paper-card class="card-item add-card"}}
         {{#paper-item class="card-item card-add-item" onClick=(action "showFormDialogAction")}}
           <span class="card-add-text">+</span>
         {{/paper-item}}
       {{/paper-card}}
+      {{#paper-button class="add-circle-button" primary=true raised=false iconButton=true onClick=(action "showFormDialogAction")}}
+      {{paper-icon "add_circle" size=70}}
+      {{!-- {{paper-icon "check-circle" size=48}} --}}
+      {{/paper-button}}
       
 </div>
 
@@ -94,17 +99,17 @@
     {{/paper-toolbar}}
 
     {{#paper-dialog-content}}
-      {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center"  onSubmit=(action "addHabit")as |form|}}
-        <div class="layout-row layout-align-space-around-center">
+      {{#paper-form class="newHabitForm layout-column  layout-align-space-between-center"  onSubmit=(action "addHabit")as |form|}}
+        <div class="layout-row layout-align-space-between-center ggg">
 
-          <div class="layout-column flex-50">
-            {{form.input label="Title" maxlength=20 value=newHabit.title onChange=(action (mut newHabit.title)) required=true}}
+          <div class="layout-column flex-45">
+            {{form.input label="Title" maxlength=15 value=newHabit.title onChange=(action (mut newHabit.title)) required=true}}
             {{#paper-select options=categories label="Category" required=true selected=newHabit.category onChange=(action (mut newHabit.category)) as |category|}}
               {{category}}
             {{/paper-select}}
           </div>
 
-          <div class="layout-column flex-50">
+          <div class="layout-column flex-45">
             {{paper-input label="Goal Days" type="number" value=newHabit.daysGoal min=1 max=356 onChange=(action (mut newHabit.daysGoal)) required=true}}
             {{!-- {{paper-slider class="flex" min=1 max=356 value=newHabit.daysGoal onChange=(action (mut newHabit.daysGoal))}} --}}
             {{#paper-radio-group
@@ -117,10 +122,12 @@
           </div>
 
         </div>
-        <div class="layout-row text-area-div">
-          {{paper-input textarea=true block=true class="text-area" label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
+        {{!-- <div class="layout-row"> --}}
+          {{paper-input textarea=true class="text-area" block=true label="Description" maxlength=150 passThru=(hash rows=5 maxRows=5)
             value=newHabit.description onChange=(action (mut newHabit.description))}}
-        </div>
+            {{!-- {{paper-input textarea=true block=true label="Biography" maxlength=150 passThru=(hash rows=5 maxRows=5)
+  value=biography onChange=(action (mut biography))}} --}}
+        {{!-- </div> --}}
         <div class="layout-row">
           {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
         </div>
@@ -141,11 +148,11 @@
     {{/paper-toolbar}}
 
     {{#paper-dialog-content}}
-      {{#paper-form class="newHabitForm layout-column  layout-align-space-around-center" as |form|}}
+      {{#paper-form onSubmit=(action "editHabit" "closeEditDialogAction") class="newHabitForm layout-column  layout-align-space-around-center" as |form|}}
         <div class="layout-row">
 
           <div class="layout-column flex-50">
-            {{form.input label="Title" value=currentHabit.title onChange=(action (mut currentHabit.title)) required=true}}
+            {{form.input label="Title" maxlength=15 value=currentHabit.title onChange=(action (mut currentHabit.title)) required=true}}
                         {{#paper-select options=categories label="Category" required=true selected=currentHabit.category onChange=(action (mut currentHabit.category)) as |category|}}
               {{category}}
             {{/paper-select}}
@@ -170,7 +177,8 @@
             value=currentHabit.description onChange=(action (mut currentHabit.description))}}
         </div>
         <div class="layout-row">
-          {{#paper-button raised=true primary=true onClick=(action "editHabit" "closeEditDialogAction")}}Submit{{/paper-button}}
+          {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
+          {{!-- {{#paper-button raised=true primary=true onClick=(action "editHabit" "closeEditDialogAction")}}Submit{{/paper-button}} --}}
         </div>
       {{/paper-form}}
     {{/paper-dialog-content}}
@@ -206,8 +214,8 @@
 {{#if showDeleteDialog}}
   {{#paper-dialog class="flex-77" onClose=(action "closeDeleteDialogAction" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
 
-    {{#paper-dialog-content}}
-      <span>Are you sure you want to delete "{{currentHabit.title}}"?</span>
+    {{#paper-dialog-content class="delete-text"}}
+      <span>Are you sure you want to delete "{{currentHabit.title}}"?</span><br>
       {{#paper-button raised=true primary=true onClick=(action "confirmDelete")}}Yes{{/paper-button}}
       {{#paper-button raised=true primary=true onClick=(action "closeDeleteDialogAction")}}Cancel{{/paper-button}}
     {{/paper-dialog-content}}

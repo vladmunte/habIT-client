@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 
 export default Controller.extend({
   // ajax: Ember.inject.service(),
+  showMobileAchievDialog: false,
   sportTotalDays: null,
   lifestyleTotalDays: null,
   financialTotalDays: null,
@@ -209,7 +210,12 @@ export default Controller.extend({
     };
   }),
   actions: {
-    
+    showMobileAchievDialogAction() {
+      this.set('showMobileAchievDialog', true);
+    },
+    closeDialog() {
+      this.set('showMobileAchievDialog', false);
+    }
   }
 
 });

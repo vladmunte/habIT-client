@@ -5,13 +5,37 @@
       <img src="assets/images/logo8.png">
     {{/link-to}}
       <span class="flex"></span>
-
-      {{#current-route-button route="dashboard"}}
-        <p>Dashboard</p>
-      {{/current-route-button}}
+        {{#paper-menu as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button class="menu-button" iconButton=true}}
+            {{paper-icon "menu"}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+          {{#menu.content width=2 as |content|}}
+        
+          {{#content.menu-item}}
+          {{#paper-button}}
+            {{#link-to "dashboard"}}
+            <p>Dashboard</p>
+            {{/link-to}}
+          {{/paper-button}}
+          {{/content.menu-item}}
+          {{#content.menu-item}}
+          {{#paper-button}}
+            {{#link-to "habit-tracker"}}
+            <p>Home</p>
+            {{/link-to}}
+          {{/paper-button}}
+          {{/content.menu-item}}
+        {{/menu.content}}
+      {{/paper-menu}}
+      
+    {{#current-route-button class="toolbar-button" route="dashboard"}}
+      <p>Dashboard</p>
+    {{/current-route-button}}
     {{#link-to "habit-tracker"}}
-      {{#current-route-button route="habit-tracker"}}
-        <p>Home</p>
+      {{#current-route-button class="toolbar-button" route="habit-tracker"}}
+      <p>Home</p>
       {{/current-route-button}}
     {{/link-to}}
   {{/toolbar.tools}}
